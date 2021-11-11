@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.8.1"
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+apply plugin: 'io.qameta.allure'
+apply plugin: 'java'
+
+allure {
+    version = '2.13.3'
+    autoconfigure = true
+    aspectjweaver = true
+}
+
+dependencies {
+    implementation("org.junit.jupiter:junit-jupiter:5.6.2")
+    implementation("io.qameta.allure:allure-junit5:2.13.3") {
+        exclude group: "org.junit.platform"
+        exclude group: "org.junit.jupiter"
+    }
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.6.2")
+}
+
+test {
+    useJUnitPlatform()
+}
